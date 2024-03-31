@@ -1,0 +1,102 @@
+﻿@page
+@model BCCM1.Pages.Users.ThuModel
+@{
+    ViewData["Title"] = "thu";
+}
+
+@section Scripts {
+    <script>
+        // Đợi cho tất cả các phần tử trong DOM được tải hoàn toàn
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lấy navbar bằng cách sử dụng querySelector
+            var navbar = document.querySelector('.navbar');
+            // Ẩn thanh navbar bằng cách thêm lớp CSS 'd-none' (ẩn)
+            navbar.classList.add('d-none');
+        });
+    </script>
+}
+
+
+<style>
+    input[type=submit] {
+        width: 100%;
+        background-color: #198754;
+        color: white;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 5vw;
+        cursor: pointer;
+        margin-top: 2vw;
+    }
+
+        input[type=submit]:hover {
+            background-color: #198754;
+        }
+
+    form-thu {
+        border-radius: 5vw;
+        padding: 20px;
+    }
+    .underlist {
+        list-style-type: none;
+        margin: 1vw 0vw 0vw 2vw;
+        padding: 0;
+        width: 10%;
+        position: fixed;
+        height: 100%;
+        overflow: auto
+    }
+
+    li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+        li a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
+    <div class="container-fluid" style="margin:0vw 5vw 0vw 5vw">
+        <a class="navbar-brand" asp-area="" asp-page="/Users/Homepage" style="width:10%; height:10%">
+            <div>
+                <img src="/img/logo_lagi_8_resize.jpg" style="float:left; max-width:40%; max-height:40%" />
+            </div>
+        </a>
+        <a href="/Index"><button class=" btn btn-outline-success" style="border-radius:5vw; float:right">Log out</button></a>
+    </div>
+</nav>
+
+<center>
+    <ul class="underlist">
+        <li><a style="border-radius:2vw" href="/Users/Homepage">Trang chủ</a></li>
+        <li><a class="active" style="border-radius:2vw;margin-top:1vw" href="/Users/Thu">Khoản thu</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Chi">Khoản chi</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor">Tài khoản</a></li>
+    </ul>
+</center>
+
+<div style="background-color:#d5f7e6; margin-left:14%;padding:1px 16px;height:1000px;">
+    <div class="col-sm-5" style="border-radius: 5vw; border: 1px solid #459379;padding:3vw;margin:6vw;background-color:white">
+
+        <div class="form-thu">
+                <label for="lbl">Email</label>
+                <input type="text" class="form-control" name="email" placeholder="Email..">
+
+                <label for="lbl">Mật khẩu</label>
+                <input type="password" class="form-control" name="pass" placeholder="Mật khẩu..">
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+    </div>
+
+</div>

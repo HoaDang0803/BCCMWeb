@@ -25,7 +25,7 @@
     }
 
 
-    input[type=submit] {
+    button[type=submit] {
         width: 100%;
         background-color: #198754;
         color: white;
@@ -36,7 +36,7 @@
         margin-top: 2vw;
     }
 
-        input[type=submit]:hover {
+        button[type=submit]:hover {
             background-color: #198754;
         }
 
@@ -63,8 +63,8 @@
             <div class="col-sm-5" style="border-radius: 5vw; border: 1px solid #459379;padding:3vw;margin:6vw;background-color:white">
 
                 <h1 style="color:#198754; margin-bottom:2vw;">Log in</h1>
-                
-    <form method="post">
+
+            <form method="post" asp-page-handler="OnPost">
                 <div class="form-login">
                     <form action="/action_page.php">
                         <label for="lbl">Email</label>
@@ -73,7 +73,7 @@
                         <label for="lbl">Mật khẩu</label>
                         <input type="password" id="pass" name="pass" value="@Model.userInfo.pass" placeholder="Mật khẩu..">
 
-                        <input type="submit" value="Đăng Nhập">
+                        <button type="submit">Đăng Nhập</button>
                     </form>
                 </div>
             </form>

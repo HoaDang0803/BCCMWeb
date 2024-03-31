@@ -29,7 +29,7 @@ namespace BCCM1.Pages.Users
             //if ok, save new client to database 
             try
             {
-                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=MYSTORE;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
+                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -54,7 +54,7 @@ namespace BCCM1.Pages.Users
             //clear info for next input 
             userInfo.email = "";
             userInfo.pass = "";
-            Response.Redirect("/Pages/Index.cshtml");
+            Response.Redirect("/Users/Homepage");
             //sau khi thêm thành công 1 row thì redirect về trang /clients/index để hiển thị danh sách chi tiết clients
 
 

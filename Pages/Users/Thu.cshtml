@@ -16,7 +16,6 @@
     </script>
 }
 
-
 <style>
     input[type=submit] {
         width: 100%;
@@ -63,6 +62,17 @@
             background-color: #555;
             color: white;
         }
+        .btn{
+            background-color: #4ab78d;
+            border-radius: 50px;
+        }
+
+        .input{
+            width: 120px;
+            background-color: lightgrey;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
 </style>
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
@@ -72,7 +82,7 @@
                 <img src="/img/logo_lagi_8_resize.jpg" style="float:left; max-width:40%; max-height:40%" />
             </div>
         </a>
-        <a href="/Index"><button class=" btn btn-outline-success" style="border-radius:5vw; float:right">Log out</button></a>
+        <a href="/Index"><button class="btn btn-outline-success" style="border-radius:5vw; float:right">Log out</button></a>
     </div>
 </nav>
 
@@ -80,23 +90,81 @@
     <ul class="underlist">
         <li><a style="border-radius:2vw" href="/Users/Homepage">Trang chủ</a></li>
         <li><a class="active" style="border-radius:2vw;margin-top:1vw" href="/Users/Thu">Khoản thu</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Chi">Khoản chi</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="">Khoản chi</a></li>
         <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor">Tài khoản</a></li>
     </ul>
 </center>
 
-<div style="background-color:#d5f7e6; margin-left:14%;padding:1px 16px;height:1000px;">
-    <div class="col-sm-5" style="border-radius: 5vw; border: 1px solid #459379;padding:3vw;margin:6vw;background-color:white">
-
-        <div class="form-thu">
-                <label for="lbl">Email</label>
-                <input type="text" class="form-control" name="email" placeholder="Email..">
-
-                <label for="lbl">Mật khẩu</label>
-                <input type="password" class="form-control" name="pass" placeholder="Mật khẩu..">
-
-                <button type="submit" class="btn btn-primary">Submit</button>
+<div class="" style="background-color:#d5f7e6; margin-left:14%;">
+    <div class="d-flex flex-row w-100 justify-content-between p-2" style="border: 1px solid #459379;background-color:white">
+        <div class="col-5">
+            <div class="input-group mb-3">
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Số tiền</span>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
             </div>
+
+            <div class="input-group mb-3">
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Loại</span>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Số tiền thu</span>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Loại chi tiêu</span>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Ngày thu</span>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Mô tả chi tiết</span>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-25">Submit</button>
+        </div>
+      
+        <img class="w-50 col-5" src="/img/thu_chi.jpg" />
+           
+    </div>
+    <div class="col-12 p-2 mt-2" style="border: 1px solid #459379;background-color:white">
+        <table class="table table-succes table-striped-colums">
+            <thead>
+                <tr>
+                    <th colspan="1" scope="col">STT</th>
+                    <th colspan="2" scope="col">Số tiền</th>
+                    <th colspan="2" scope="col">Loại</th>
+                    <th colspan="2" scope="col">Số tiền thu</th>
+                    <th colspan="2" scope="col">Loại chi tiêu</th>
+                    <th colspan="2" scope="col">Ngày thu</th>
+                    <th colspan="2" scope="col">Mô tả chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="1" scope="row">1</th>
+                    <td colspan="2">Mark</td>
+                    <td colspan="2">Otto</td>
+                    <td colspan="2">None</td>
+                    <td colspan="2">None</td>
+                    <td colspan="2">None</td>
+                    <td colspan="2">None</td>
+                </tr>
+                <tr>
+                    <th colspan="1" scope="row">2</th>
+                    <td colspan="2">Jacob</td>
+                    <td colspan="2">Thornton</td>
+                    <td colspan="2">None</td>
+                    <td colspan="2">None</td>
+                    <td colspan="2">None</td>
+                    <td colspan="2">None</td>
+                </tr>
+             
+            </tbody>
+        </table>
     </div>
 
 </div>

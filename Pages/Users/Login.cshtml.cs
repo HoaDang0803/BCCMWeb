@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 
 namespace BCCM1.Pages.Users
@@ -20,7 +19,7 @@ namespace BCCM1.Pages.Users
             userInfo.pass = Request.Form["pass"];
 
             //check all fields are filled 
-            if ( string.IsNullOrEmpty(userInfo.email) || string.IsNullOrEmpty(userInfo.pass))
+            if (string.IsNullOrEmpty(userInfo.email) || string.IsNullOrEmpty(userInfo.pass))
             {
                 errorMessage = "All fields are required!!!";
                 return;

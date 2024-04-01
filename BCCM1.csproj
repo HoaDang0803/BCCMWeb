@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\quan-ly-thu-chi.gif" />
   </ItemGroup>
 
   <ItemGroup>

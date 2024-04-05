@@ -18,29 +18,54 @@ namespace BCCM1.Pages.Users
             userInfo.email = Request.Form["email"];
             userInfo.pass = Request.Form["pass"];
 
+            
+
             //check all fields are filled 
             if (string.IsNullOrEmpty(userInfo.email) || string.IsNullOrEmpty(userInfo.pass))
             {
-                errorMessage = "All fields are required!!!";
+                errorMessage = "Cần nhập đầy đủ thông tin!!!";
                 return;
             }
 
             //if ok, save new client to database 
             try
             {
-                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
+                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE01;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Users" +
-                        "(email, passWord) VALUES" +
-                        "(@email, @passWord;";
+
+                    string sql = "SELECT * FROM Users WHERE email=@email AND passWord = @passWord";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@email", userInfo.email);
-                        command.Parameters.AddWithValue("@phone", userInfo.pass);
+                        command.Parameters.AddWithValue("@passWord", userInfo.pass);
 
-                        command.ExecuteNonQuery();
+                        // Thực thi truy vấn và nhận về một SqlDataReader
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            // Kiểm tra xem có dòng dữ liệu nào được trả về không
+                            if (reader.Read())
+                            {
+
+                                userInfo.id = ""+reader.GetInt32(0);
+                                userInfo.email = reader.GetString(1);
+                                userInfo.pass = reader.GetString(2);
+                                userInfo.fName = reader.GetString(3);
+                                userInfo.lName = reader.GetString(4);
+                                userInfo.gender = reader.GetString(5);
+
+
+                                // Chuyển hướng đến trang Homepage với tham số truy vấn URL userId
+                                Response.Redirect("/Users/Homepage?id=" + userInfo.id);
+                            }
+                            else
+                            {
+                                userInfo.pass = "";
+                                errorMessage = "Đăng nhập không thành công. Vui lòng thử lại!!!";
+                                return;
+                            }
+                        }
                     }
                 }
             }
@@ -49,14 +74,6 @@ namespace BCCM1.Pages.Users
                 Console.WriteLine(ex.ToString());
                 throw;
             }
-
-            //clear info for next input 
-            userInfo.email = "";
-            userInfo.pass = "";
-            Response.Redirect("/Users/Homepage");
-            //sau khi thêm thành công 1 row thì redirect về trang /clients/index để hiển thị danh sách chi tiết clients
-
-
         }
     }
 }

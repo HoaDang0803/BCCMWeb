@@ -57,6 +57,13 @@
     }
 
 </style>
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
     <div id="background" class="container-fluid">
         <center>
@@ -64,9 +71,10 @@
 
                 <h1 style="color:#198754; margin-bottom:2vw;">Log in</h1>
 
-            <form method="post" asp-page-handler="OnPost">
+
                 <div class="form-login">
-                    <form action="/action_page.php">
+                <form method="post">
+
                         <label for="lbl">Email</label>
                         <input type="text" id="email" name="email" value="@Model.userInfo.email" placeholder="Email..">
 
@@ -76,7 +84,6 @@
                         <button type="submit">Đăng Nhập</button>
                     </form>
                 </div>
-            </form>
             </div>
         </center>
     </div>

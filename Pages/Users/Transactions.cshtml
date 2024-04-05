@@ -1,7 +1,7 @@
 ﻿@page
-@model BCCM1.Pages.Users.ChiModel
+@model BCCM1.Pages.Users.TransactionsModel
 @{
-    ViewData["Title"] = "Chi";
+    ViewData["Title"] = "Transactions";
 }
 
 @section Scripts {
@@ -16,8 +16,26 @@
     </script>
 }
 
-
 <style>
+    input[type=submit] {
+        width: 100%;
+        background-color: #198754;
+        color: white;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 5vw;
+        cursor: pointer;
+        margin-top: 2vw;
+    }
+
+        input[type=submit]:hover {
+            background-color: #198754;
+        }
+
+    form-thu {
+        border-radius: 5vw;
+        padding: 20px;
+    }
     .underlist {
         list-style-type: none;
         margin: 1vw 0vw 0vw 2vw;
@@ -44,13 +62,12 @@
             background-color: #555;
             color: white;
         }
-
-        .btn {
+        .btn_submit{
             background-color: #4ab78d;
             border-radius: 50px;
         }
 
-        .input {
+        .input{
             width: 120px;
             background-color: lightgrey;
             border-top-left-radius: 5px;
@@ -62,40 +79,43 @@
     <div class="container-fluid" style="margin:0vw 5vw 0vw 5vw">
         <a class="navbar-brand" asp-area="" asp-page="/Users/Homepage" style="width:10%; height:10%">
             <div>
-                <img src="/img/logo_lagi_8_resize.jpg" style="float:left; max-width:40%; max-height:40%" />
+                <img src="/img/logo.png" style="float:left; max-width:40%; max-height:40%" />
             </div>
         </a>
-        <a href="/Index"><button class=" btn btn-outline-success" style="border-radius:5vw; float:right">Log out</button></a>
+        <form method="post">
+            <input type="hidden" name="id" value="@Model.userInfo.id" />
+        </form>
+        <div style="margin-left: auto;margin-right: 1vw;">
+            @Model.userInfo.email
+        </div>
+        <a href="/Index"><button class="btn btn-outline-success" style="border-radius:5vw; float:right">Log out</button></a>
     </div>
 </nav>
 
 <center>
     <ul class="underlist">
-        <li><a style="border-radius:2vw" href="/Users/Homepage">Trang chủ</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Thu">Khoản thu</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Chi">Khoản chi</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor">Tài khoản</a></li>
+        <li><a style="border-radius:2vw" href="/Users/Homepage?id=@Model.userInfo.id">Trang chủ</a></li>
+        <li><a class="active" style="border-radius:2vw;margin-top:1vw" href="/Users/Transactions?id=@Model.userInfo.id">Giao dịch</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor?id=@Model.userInfo.id">Tài khoản</a></li>
     </ul>
 </center>
 
-<div class="" style="background-color:#d5f7e6; margin-left:14%;">
-    <div class="d-flex flex-row w-100 justify-content-between p-2" style="border: 1px solid #459379;background-color:white">
+<div class="pl-4" style="background-color:#d5f7e6; margin-left:14%; height: 100vh">
+    <div class="d-flex flex-row w-100 justify-content-between p-2 pt-3">
         <div class="col-5">
             <div class="input-group mb-3">
                 <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Số tiền</span>
                 <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
             </div>
-
             <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Loại</span>
-                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Loại thu nhập</span>
+                <select type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
             </div>
             <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Số tiền thu</span>
-                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Loại chi tiêu</span>
+                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Danh mục</span>
                 <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
             </div>
             <div class="input-group mb-3">
@@ -107,48 +127,41 @@
                 <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
-            <button type="submit" class="btn btn-primary w-25">Submit</button>
+            <button type="submit" class="btn_submit btn-success w-25">Submit</button>
         </div>
-
+      
         <img class="w-50 col-5" src="/img/thu_chi.jpg" />
-
+           
     </div>
-    <div class="col-12 p-2 mt-2" style="border: 1px solid #459379;background-color:white">
+    <div class="col-12 p-2 mt-2">
         <table class="table table-succes table-striped-colums">
             <thead>
                 <tr>
-                    <th colspan="1" scope="col">STT</th>
+                    <th colspan="1" scope="col">ID</th>
                     <th colspan="2" scope="col">Số tiền</th>
-                    <th colspan="2" scope="col">Loại</th>
-                    <th colspan="2" scope="col">Số tiền thu</th>
                     <th colspan="2" scope="col">Loại chi tiêu</th>
+                    <th colspan="2" scope="col">Danh mục</th>
                     <th colspan="2" scope="col">Ngày thu</th>
                     <th colspan="2" scope="col">Mô tả chi tiết</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th colspan="1" scope="row">1</th>
-                    <td colspan="2">Mark</td>
-                    <td colspan="2">Otto</td>
-                    <td colspan="2">None</td>
-                    <td colspan="2">None</td>
-                    <td colspan="2">None</td>
-                    <td colspan="2">None</td>
-                </tr>
-                <tr>
-                    <th colspan="1" scope="row">2</th>
-                    <td colspan="2">Jacob</td>
-                    <td colspan="2">Thornton</td>
-                    <td colspan="2">None</td>
-                    <td colspan="2">None</td>
-                    <td colspan="2">None</td>
-                    <td colspan="2">None</td>
-                </tr>
+                @foreach(var item in Model.listTrans)
+                {                
+                    <tr>
+                    <th colspan="1" scope="row">@item.transId</th>
+                    <td colspan="2">@item.amount</td>
+                    <td colspan="2">@item.type</td>
+                    <td colspan="2">@item.category</td>
+                    <td colspan="2">@item.transDate</td>
+                    <td colspan="2">@item.description</td>
 
+                </tr>
+                }
+
+             
             </tbody>
         </table>
     </div>
 
 </div>
-

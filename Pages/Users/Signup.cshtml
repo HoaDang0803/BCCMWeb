@@ -56,6 +56,14 @@
 
 </style>
 
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div id="background" class="container-fluid">
    <center>
         <div class="col-sm-5" style="border-radius: 5vw; border: 1px solid #459379;padding:3vw;background-color:white">
@@ -63,7 +71,8 @@
             <h1 style="color:#198754; margin-bottom:2vw;">Sign up</h1>
 
             <div class="form-signup">
-                <form action="/action_page.php">
+                <form method="post">
+
                     <label for="lbl">Tên</label>
                     <input type="text" id="fname" name="firstname" placeholder="Tên..">
 
@@ -77,10 +86,10 @@
                     <input type="password" id="pass" name="pass" placeholder="Mật khẩu..">
 
                     <label for="lbl">Giới Tính</label>
-                    <select id="gioitinh" name="gioitinh">
-                        <option value="nam">Nam</option>
-                        <option value="nu">Nữ</option>
-                        <option value="khac">Khác</option>
+                    <select id="gioitinh" name="gender">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
                     </select>
 
                     <input type="submit" value="Đăng kí">

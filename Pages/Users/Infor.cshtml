@@ -50,19 +50,24 @@
     <div class="container-fluid" style="margin:0vw 5vw 0vw 5vw">
         <a class="navbar-brand" asp-area="" asp-page="/Users/Homepage" style="width:10%; height:10%">
             <div>
-                <img src="/img/logo_lagi_8_resize.jpg" style="float:left; max-width:40%; max-height:40%" />
+                <img src="/img/logo.png" style="float:left; max-width:40%; max-height:40%" />
             </div>
         </a>
+        <form method="post">
+            <input type="hidden" name="id" value="@Model.userInfo.id" />
+        </form>
+        <div style="margin-left: auto;margin-right: 1vw;">
+            @Model.userInfo.email
+        </div>
         <a href="/Index"><button class=" btn btn-outline-success" style="border-radius:5vw; float:right">Log out</button></a>
     </div>
 </nav>
 
 <center>
     <ul class="underlist">
-        <li><a style="border-radius:2vw" href="/Users/Homepage">Trang chủ</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Thu">Khoản thu</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Chi">Khoản chi</a></li>
-        <li><a class="active" style="border-radius:2vw;margin-top:1vw" href="/Users/Infor">Tài khoản</a></li>
+        <li><a style="border-radius:2vw" href="/Users/Homepage?id=@Model.userInfo.id">Trang chủ</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Transactions?id=@Model.userInfo.id">Giao dịch</a></li>
+        <li><a class="active" style="border-radius:2vw;margin-top:1vw" href="/Users/Infor?id=@Model.userInfo.id">Tài khoản</a></li>
     </ul>
 </center>
 

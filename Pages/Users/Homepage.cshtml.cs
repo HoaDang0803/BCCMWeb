@@ -1,61 +1,84 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 
 namespace BCCM1.Pages.Users
 {
-
-    public class UsersInfo
-    {
-        public string id { get; set; }
-        public string fName { get; set; }
-        public string lName { get; set; }
-        public string email { get; set; }
-        public string pass { get; set; }
-        public string gender { get; set; }
-        public string birthDay { get; set; }
-        public string address { get; set; }
-        public string phone { get; set; }
-    }
-
     public class HomepageModel : PageModel
     {
-        public List<UsersInfo> listUser = new List<UsersInfo>();
+        public UsersInfo userInfo = new UsersInfo();
+        public Accounts account = new Accounts();
+        public Transactions transaction = new Transactions();
         public void OnGet()
-        {
-            try
             {
-                string connectionString = "Data Source=LAPTOP-TTTBNCOH;Initial Catalog=HFINANCE;Integrated Security=True";
-                using (SqlConnection connection = new SqlConnection(connectionString))
+            string id = Request.Query["id"];
+            try
                 {
-                    connection.Open();
-                    string sql = "Select * from Users";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    string connectionString = "Data Source = THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE01;" + "Integrated Security=True;Pooling=False;TrustServerCertificate=True";
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        connection.Open();
+                        string sql = "Select * from Users where userId=@id";
+                        using (SqlCommand command = new SqlCommand(sql, connection))
                         {
-                            while (reader.Read())
+                        command.Parameters.AddWithValue("id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                UsersInfo userInfo = new UsersInfo();
-                                userInfo.id = "" + reader.GetInt32(0);
-                                userInfo.fName = reader.GetString(1);
-                                userInfo.lName = reader.GetString(2);
-                                userInfo.email = reader.GetString(3);
-                                userInfo.pass = reader.GetString(4);
-                                userInfo.gender = reader.GetString(5);
-                                userInfo.birthDay = reader.GetDateTime(6).ToString();
-                                userInfo.address = reader.GetString(7);
-                                userInfo.phone = reader.GetString(8);
-                                listUser.Add(userInfo);
+                                if (reader.Read())
+                                {
+                                    userInfo.id = "" + reader.GetInt32(0);
+                                    userInfo.email = reader.GetString(1);
+                                    userInfo.pass = reader.GetString(2);
+                                    userInfo.fName = reader.GetString(3);
+                                    userInfo.lName = reader.GetString(4);
+                                }
+                            }
+                        }
+
+                        string sqlBalance = "Select Balance from Accounts where userId=@id";
+                        using (SqlCommand command = new SqlCommand(sqlBalance, connection))
+                        {
+                            command.Parameters.AddWithValue("id", id);
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    account.balance = reader.GetDecimal(0).ToString();
+                                }
+                            }
+                        }
+
+                        string sqlIncome = "SELECT SUM(amount) AS TotalIncome FROM Transactions WHERE Type = 'Income' AND userId=@id";
+                        using (SqlCommand command = new SqlCommand(sqlIncome, connection))
+                        {
+                            command.Parameters.AddWithValue("id", id);
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    transaction.amountIncome = reader.GetDecimal(0).ToString();
+                                }
+                            }
+                        }
+
+                        string sqlExp = "SELECT SUM(amount) AS TotalExpense FROM Transactions WHERE Type = 'Expense' AND userId=@id";
+                        using (SqlCommand command = new SqlCommand(sqlExp, connection))
+                        {
+                            command.Parameters.AddWithValue("id", id);
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    transaction.amountExp = reader.GetDecimal(0).ToString();
+                                }
                             }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
     }
 }

@@ -77,14 +77,11 @@
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
     <div class="container-fluid" style="margin:0vw 5vw 0vw 5vw">
-        <a class="navbar-brand" asp-area="" asp-page="/Users/Homepage" style="width:10%; height:10%">
+        <a class="navbar-brand" asp-area="" asp-page="/Users/Homepage@Model.userInfo.id" style="width:10%; height:10%">
             <div>
-                <img src="/img/logo.png" style="float:left; max-width:40%; max-height:40%" />
+                <img src="/img/logo2.png" style="float:left; max-width:40%; max-height:40%" />
             </div>
         </a>
-        <form method="post">
-            <input type="hidden" name="id" value="@Model.userInfo.id" />
-        </form>
         <div style="margin-left: auto;margin-right: 1vw;">
             @Model.userInfo.email
         </div>
@@ -94,74 +91,78 @@
 
 <center>
     <ul class="underlist">
-        <li><a style="border-radius:2vw" href="/Users/Homepage?id=@Model.userInfo.id">Trang chủ</a></li>
-        <li><a class="active" style="border-radius:2vw;margin-top:1vw" href="/Users/Transactions?id=@Model.userInfo.id">Giao dịch</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor?id=@Model.userInfo.id">Tài khoản</a></li>
+        <li><a style="border-radius:2vw" href="/Users/Homepage?id=@Model.userInfo.id">Home</a></li>
+        <li><a class="active" style="border-radius:2vw;margin-top:1vw" href="/Users/Transactions?id=@Model.userInfo.id">Transactions</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor?id=@Model.userInfo.id">Information</a></li>
     </ul>
 </center>
 
-<div class="pl-4" style="background-color:#d5f7e6; margin-left:14%; height: 100vh">
-    <div class="d-flex flex-row w-100 justify-content-between p-2 pt-3">
-        <div class="col-5">
-            <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Số tiền</span>
-                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Loại thu nhập</span>
-                <select type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-            </div>
-            <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Danh mục</span>
-                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Ngày thu</span>
-                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Mô tả chi tiết</span>
-                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
 
-            <button type="submit" class="btn_submit btn-success w-25">Submit</button>
+<div class="pl-4" style="background-color:#d5f7e6; margin-left:14%; height: 100vh">
+
+    <div class="form-addTrans">
+    <form method="post">
+        <div class="d-flex flex-row w-100 justify-content-between p-2 pt-3">
+            <input type="hidden" name="id" value="@Model.userInfo.id" />
+            <div class="col-5">
+                <div class="input-group mb-3">
+                    <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Amount</span>
+                    <input type="text" class="form-control" name="amount" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Categories</span>
+                    <select type="text" class="form-control" name="cateId" aria-label="Username" aria-describedby="basic-addon1">
+                        @for (int i = 0; i < Model.listCate.Count; i++)
+                        {
+                            <option value="@Model.listCate[i].cateId">@Model.listCate[i].cateName</option>
+                        }    
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Transaction Date</span>
+                    <input type="date" id="transaction" name="transDate" value="MM-dd-yyyy">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input d-flex align-items-center justify-content-center" id="basic-addon1">Description</span>
+                    <input type="text" class="form-control" name="description" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+
+                <button type="submit" class="btn_submit btn-success w-25">Submit</button>
+            </div>
+                <img class="w-50 col-5" src="/img/thu_chi.jpg"/>
         </div>
-      
-        <img class="w-50 col-5" src="/img/thu_chi.jpg" />
-           
+    </form>
     </div>
+    
     <div class="col-12 p-2 mt-2">
         <table class="table table-succes table-striped-colums">
             <thead>
                 <tr>
                     <th colspan="1" scope="col">ID</th>
-                    <th colspan="2" scope="col">Số tiền</th>
-                    <th colspan="2" scope="col">Loại chi tiêu</th>
-                    <th colspan="2" scope="col">Danh mục</th>
-                    <th colspan="2" scope="col">Ngày thu</th>
-                    <th colspan="2" scope="col">Mô tả chi tiết</th>
+                    <th colspan="2" scope="col">Amount</th>
+                    <th colspan="2" scope="col">Type</th>
+                    <th colspan="2" scope="col">Categories</th>
+                    <th colspan="2" scope="col">Date</th>
+                    <th colspan="2" scope="col">Description</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model.listTrans)
-                {                
+                @for(int i=0;i<Model.transCates.Count;i++)
+                {
+                    var item = Model.transCates[i];
                     <tr>
-                    <th colspan="1" scope="row">@item.transId</th>
+                    <th colspan="1" scope="row">@(i+1)</th>
                     <td colspan="2">@item.amount</td>
-                    <td colspan="2">@item.type</td>
-                    <td colspan="2">@item.category</td>
+                    <td colspan="2">@item.transType</td>
+                    <td colspan="2">@item.cateName</td>
                     <td colspan="2">@item.transDate</td>
                     <td colspan="2">@item.description</td>
 
                 </tr>
-                }
-
-             
+                }             
             </tbody>
         </table>
     </div>
+
 
 </div>

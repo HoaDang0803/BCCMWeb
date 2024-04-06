@@ -50,14 +50,15 @@
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
     <div class="container-fluid" style="margin:0vw 5vw 0vw 5vw">
-        <a class="navbar-brand" asp-area="" asp-page="/Users/Homepage" style="width:10%; height:10%">
+        <a class="navbar-brand" asp-area="" asp-page="/Users/Homepage?id=@Model.userInfo.id" style="width:10%; height:10%">
             <div>
-                <img src="/img/logo.png" style="float:left; max-width:40%; max-height:40%" />
+                <img src="/img/logo2.png" style="float:left; max-width:40%; max-height:40%" />
             </div>
         </a>
         <form method="post"> 
         <input type="hidden" name="id" value="@Model.userInfo.id" />
         </form>
+
         <div style="margin-left: auto;margin-right: 1vw;">
             @Model.userInfo.email
         </div>
@@ -68,36 +69,59 @@
 
 <center>
     <ul class="underlist">
-        <li><a class="active" style="border-radius:2vw">Trang chủ</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Transactions?id=@Model.userInfo.id">Giao dịch</a></li>
-        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor?id=@Model.userInfo.id">Tài khoản</a></li>
+        <li><a class="active" style="border-radius:2vw" href="/Users/Homepage?id=@Model.userInfo.id">Home</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Transactions?id=@Model.userInfo.id">Transactions</a></li>
+        <li><a style="border-radius:2vw;margin-top:1vw" href="/Users/Infor?id=@Model.userInfo.id">Information</a></li>
                 
     </ul>
 </center>
-
+                
 <div style="background-color:#d5f7e6; margin-left:14%;padding:1px 16px;height:1000px;">
     <div class="row" style="margin:1vw">
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title" style="color:#198754">Tổng tiền thu</h2>
-                    <center><h1 class="card-text">@Model.transaction.amountIncome</h1></center>
+                    <h2 class="card-title" style="color:#198754">Total Income</h2>
+@*                     @if (Model.transCate is null)
+                    {
+                        <center><h1 class="card-text">---</h1></center>
+                    }
+                    else
+                    { *@
+                        <center><h1 class="card-text">@(Model.inCome == 0 ? "---" : Model.inCome)</h1></center>
+                    @* } *@
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title" style="color:#198754">Tổng tiền hiện tại</h2>
-                    <center><h1 class="card-text">@Model.account.balance</h1></center>
+                    <h2 class="card-title" style="color:#008080">Balance</h2>
+                    
+                    @* if (Model.transCate is null)
+                    {
+                        <center><h1 class="card-text">---</h1></center>
+                    }else
+                    {
+                    } *@
+                        <center><h1 class="card-text">@(Model.inCome-Model.outCome)</h1></center>
+                        
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title" style="color:#198754">Tổng tiền chi</h2>
-                    <center><h1 class="card-text">@Model.transaction.amountExp</h1></center>
+                    <h2 class="card-title" style="color:#800000">Total Expense</h2>
+                    <center><h1 class="card-text">@(Model.outCome == 0 ? "---" : Model.outCome)</h1></center>
+                    @*       @if (Model.transCate.totalExpense is null)
+                    {
+                    <center><h1 class="card-text">---</h1></center>
+                    }
+                    else
+                    {
+                    <center><h1 class="card-text">@Model.transCate.totalExpense</h1></center>
+                    } *@
                 </div>
             </div>
         </div>
@@ -108,10 +132,10 @@
         <canvas id="myChart" style="height:100%;max-height:720px;width:100%;max-width:3000px"></canvas>
 
         <script>
-            const xValues = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+            const xValues = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const yValues1 = [55, 49, 44, 24, 105, 90, 75, 60, 45, 30, 15, 0]; // Giá trị cho cột 1
             const yValues2 = [30, 25, 20, 15, 10, 5, 15, 20, 25, 30, 35, 40]; // Giá trị cho cột 2
-            const barColors = ["green", "#295450"]; // Màu cho từng cột
+            const barColors = ["green", "#800000"]; // Màu cho từng cột
 
             // Hàm tạo biểu đồ
             function createChart() {
@@ -120,12 +144,12 @@
                     data: {
                         labels: xValues,
                         datasets: [{
-                            label: 'Doanh thu', // Nhãn cho biểu đồ
+                            label: 'Income', // Nhãn cho biểu đồ
                             backgroundColor: barColors[0], // Màu cho cột 1
                             data: yValues1 // Dữ liệu cho cột 1
                         },
                         {
-                            label: 'Sản lượng', // Nhãn cho biểu đồ
+                            label: 'Expense', // Nhãn cho biểu đồ
                             backgroundColor: barColors[1], // Màu cho cột 2
                             data: yValues2 // Dữ liệu cho cột 2
                         }]
@@ -133,7 +157,6 @@
                     options: {
                         title: {
                             display: true,
-                            text: "World Wine Production 2018"
                         }
                     }
                 });

@@ -16,9 +16,7 @@ namespace BCCM1.Pages.Users
         {
             //property Request biểu diễn các thông tin do user gửi yêu cầu (request) đến Server 
             userInfo.email = Request.Form["email"];
-            userInfo.pass = Request.Form["pass"];
-
-            
+            userInfo.pass = Request.Form["pass"];        
 
             //check all fields are filled 
             if (string.IsNullOrEmpty(userInfo.email) || string.IsNullOrEmpty(userInfo.pass))
@@ -30,7 +28,7 @@ namespace BCCM1.Pages.Users
             //if ok, save new client to database 
             try
             {
-                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE01;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
+                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE02;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();

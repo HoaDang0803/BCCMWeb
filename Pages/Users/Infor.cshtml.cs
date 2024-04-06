@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 
 namespace BCCM1.Pages.Users
@@ -11,7 +11,7 @@ namespace BCCM1.Pages.Users
             string id = Request.Query["id"];
             try
             {
-                string connectionString = "Data Source = THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE01;" + "Integrated Security=True;Pooling=False;TrustServerCertificate=True";
+                string connectionString = "Data Source = THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE02;" + "Integrated Security=True;Pooling=False;TrustServerCertificate=True";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();

@@ -6,14 +6,17 @@ namespace BCCM1.Pages.Users
     public class HomepageModel : PageModel
     {
         public UsersInfo userInfo = new UsersInfo();
-        public Accounts account = new Accounts();
-        public Transactions transaction = new Transactions();
+        public TransCate? transCate = new();
+
+        public decimal inCome = 0;
+        public decimal outCome = 0;
+
         public void OnGet()
             {
             string id = Request.Query["id"];
             try
                 {
-                    string connectionString = "Data Source = THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE01;" + "Integrated Security=True;Pooling=False;TrustServerCertificate=True";
+                    string connectionString = "Data Source = THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE02;" + "Integrated Security=True;Pooling=False;TrustServerCertificate=True";
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
@@ -27,53 +30,50 @@ namespace BCCM1.Pages.Users
                                 {
                                     userInfo.id = "" + reader.GetInt32(0);
                                     userInfo.email = reader.GetString(1);
-                                    userInfo.pass = reader.GetString(2);
-                                    userInfo.fName = reader.GetString(3);
-                                    userInfo.lName = reader.GetString(4);
                                 }
                             }
                         }
 
-                        string sqlBalance = "Select Balance from Accounts where userId=@id";
-                        using (SqlCommand command = new SqlCommand(sqlBalance, connection))
+                    string sqlIncome = "SELECT SUM(amount) AS TotalIncome FROM Transactions INNER JOIN Categories ON Transactions.categoryId=Categories.categoryId WHERE transType = 'Income' AND Transactions.userId=@id";
+                    using (SqlCommand command = new SqlCommand(sqlIncome, connection))
+                    {
+                        command.Parameters.AddWithValue("id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            command.Parameters.AddWithValue("id", id);
-                            using (SqlDataReader reader = command.ExecuteReader())
+                            if (reader.Read())
                             {
-                                if (reader.Read())
-                                {
-                                    account.balance = reader.GetDecimal(0).ToString();
-                                }
+                                inCome = reader.IsDBNull(0) ? 0 : reader.GetDecimal(0);
+                                //if (reader.IsDBNull(0))
+                                //{
+                                //    transCate = null;
+                                //}
+                                //else
+                                //{
+                                //    transCate = new()
+                                //    {
+                                //        totalIncome = reader.GetDecimal(0).ToString()
+                                //    };
+                                //}      
                             }
                         }
+                    }
 
-                        string sqlIncome = "SELECT SUM(amount) AS TotalIncome FROM Transactions WHERE Type = 'Income' AND userId=@id";
-                        using (SqlCommand command = new SqlCommand(sqlIncome, connection))
+                    string sqlExp = "SELECT SUM(amount) AS TotalExpense FROM Transactions INNER JOIN Categories ON Transactions.categoryId=Categories.categoryId WHERE transType = 'Expense' AND Transactions.userId=@id";
+                    using (SqlCommand command = new SqlCommand(sqlExp, connection))
+                    {
+                        command.Parameters.AddWithValue("id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            command.Parameters.AddWithValue("id", id);
-                            using (SqlDataReader reader = command.ExecuteReader())
+                            if (reader.Read())
                             {
-                                if (reader.Read())
-                                {
-                                    transaction.amountIncome = reader.GetDecimal(0).ToString();
-                                }
-                            }
-                        }
-
-                        string sqlExp = "SELECT SUM(amount) AS TotalExpense FROM Transactions WHERE Type = 'Expense' AND userId=@id";
-                        using (SqlCommand command = new SqlCommand(sqlExp, connection))
-                        {
-                            command.Parameters.AddWithValue("id", id);
-                            using (SqlDataReader reader = command.ExecuteReader())
-                            {
-                                if (reader.Read())
-                                {
-                                    transaction.amountExp = reader.GetDecimal(0).ToString();
-                                }
+                                outCome = reader.IsDBNull(0) ? 0 : reader.GetDecimal(0);
+                                //transCate.totalExpense = reader.GetDecimal(0).ToString();
                             }
                         }
                     }
                 }
+
+            }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);

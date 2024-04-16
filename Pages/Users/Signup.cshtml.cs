@@ -25,14 +25,14 @@ namespace BCCM1.Pages.Users
             //check all fields are filled 
             if (string.IsNullOrEmpty(userInfo.email) || string.IsNullOrEmpty(userInfo.pass) || string.IsNullOrEmpty(userInfo.fName) || string.IsNullOrEmpty(userInfo.lName) || string.IsNullOrEmpty(userInfo.gender))
             {
-                errorMessage = "Cần nhập đầy đủ thông tin!!!";
+                errorMessage = "All fields are required!!!";
                 return;
             }
 
             //if ok, save new client to database 
             try
             {
-                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE02;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
+                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -45,7 +45,7 @@ namespace BCCM1.Pages.Users
                         // Nếu email đã tồn tại, hiển thị thông báo lỗi
                         if (emailCount > 0)
                         {
-                            errorMessage = "Email đã tồn tại!";
+                            errorMessage = "Email already exists in this domain!!";
                             return;
                         }
                     }

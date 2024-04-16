@@ -21,14 +21,14 @@ namespace BCCM1.Pages.Users
             //check all fields are filled 
             if (string.IsNullOrEmpty(userInfo.email) || string.IsNullOrEmpty(userInfo.pass))
             {
-                errorMessage = "Cần nhập đầy đủ thông tin!!!";
+                errorMessage = "All fields are required!!!";
                 return;
             }
 
             //if ok, save new client to database 
             try
             {
-                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE02;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
+                string connectionString = "Data Source=THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE;Integrated Security = True; Pooling = False; TrustServerCertificate = True";
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -49,9 +49,6 @@ namespace BCCM1.Pages.Users
                                 userInfo.id = ""+reader.GetInt32(0);
                                 userInfo.email = reader.GetString(1);
                                 userInfo.pass = reader.GetString(2);
-                                userInfo.fName = reader.GetString(3);
-                                userInfo.lName = reader.GetString(4);
-                                userInfo.gender = reader.GetString(5);
 
 
                                 // Chuyển hướng đến trang Homepage với tham số truy vấn URL userId
@@ -60,7 +57,7 @@ namespace BCCM1.Pages.Users
                             else
                             {
                                 userInfo.pass = "";
-                                errorMessage = "Đăng nhập không thành công. Vui lòng thử lại!!!";
+                                errorMessage = "Login Failed! Incorrect account or password!!!";
                                 return;
                             }
                         }

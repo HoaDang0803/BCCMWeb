@@ -11,12 +11,15 @@ namespace BCCM1.Pages.Users
         public decimal inCome = 0;
         public decimal outCome = 0;
 
+        public List<decimal> monthlyIncomes = new List<decimal>();
+        public List<decimal> monthlyExpenses = new List<decimal>();
+
         public void OnGet()
             {
             string id = Request.Query["id"];
             try
                 {
-                    string connectionString = "Data Source = THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE02;" + "Integrated Security=True;Pooling=False;TrustServerCertificate=True";
+                    string connectionString = "Data Source = THANHHOA\\MSSQLSERVER01;Initial Catalog=HFINANCE;" + "Integrated Security=True;Pooling=False;TrustServerCertificate=True";
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
@@ -68,6 +71,39 @@ namespace BCCM1.Pages.Users
                             {
                                 outCome = reader.IsDBNull(0) ? 0 : reader.GetDecimal(0);
                                 //transCate.totalExpense = reader.GetDecimal(0).ToString();
+                            }
+                        }
+                    }
+
+                    for (int month = 1; month <= 12; month++)
+                    {
+                        string sqlIncomeDate = "SELECT SUM(amount) AS TotalIncome FROM Transactions INNER JOIN Categories ON Transactions.categoryId=Categories.categoryId WHERE transType = 'Income' AND Transactions.userId=@id AND MONTH(transDate) = @month";
+                        using (SqlCommand command = new SqlCommand(sqlIncomeDate, connection))
+                        {
+                            command.Parameters.AddWithValue("id", id);
+                            command.Parameters.AddWithValue("month", month);
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    decimal income = reader.IsDBNull(0) ? 0 : reader.GetDecimal(0);
+                                    monthlyIncomes.Add(income);
+                                }
+                            }
+                        }
+
+                        string sqlExpDate = "SELECT SUM(amount) AS TotalExpense FROM Transactions INNER JOIN Categories ON Transactions.categoryId=Categories.categoryId WHERE transType = 'Expense' AND Transactions.userId=@id AND MONTH(transDate) = @month";
+                        using (SqlCommand command = new SqlCommand(sqlExpDate, connection))
+                        {
+                            command.Parameters.AddWithValue("id", id);
+                            command.Parameters.AddWithValue("month", month);
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    decimal expense = reader.IsDBNull(0) ? 0 : reader.GetDecimal(0);
+                                    monthlyExpenses.Add(expense);
+                                }
                             }
                         }
                     }

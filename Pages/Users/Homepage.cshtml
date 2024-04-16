@@ -133,8 +133,8 @@
 
         <script>
             const xValues = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            const yValues1 = [55, 49, 44, 24, 105, 90, 75, 60, 45, 30, 15, 0]; // Giá trị cho cột 1
-            const yValues2 = [30, 25, 20, 15, 10, 5, 15, 20, 25, 30, 35, 40]; // Giá trị cho cột 2
+            const yValues1 = @Html.Raw(Json.Serialize(Model.monthlyIncomes));
+            const yValues2 = @Html.Raw(Json.Serialize(Model.monthlyExpenses));
             const barColors = ["green", "#800000"]; // Màu cho từng cột
 
             // Hàm tạo biểu đồ
